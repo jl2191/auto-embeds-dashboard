@@ -1,12 +1,11 @@
 # %%
 import json
+import pandas as pd
 
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
 from plotly.subplots import make_subplots
-
-from auto_embeds_wandb import fetch_wandb_runs, process_wandb_runs_df
 
 
 def generate_train_loss_figure(color_var, df, highlighted_name=None):
@@ -244,6 +243,7 @@ def generate_parallel_categories_plot(
     return fig
 
 
+""" original code snippet before caching
 original_df = fetch_wandb_runs(
     project_name="jl2191/language-transformations",
     tags=["actual", "2024-04-29 analytical and ln"],
@@ -270,6 +270,8 @@ runs_df = process_wandb_runs_df(
         },
     },
 )
+"""
+runs_df = pd.read_pickle("cached_wandb_runs.pkl")
 
 exploded_df_fig_1 = (
     runs_df.drop([col for col in runs_df.columns if "mark_translation" in col], axis=1)
